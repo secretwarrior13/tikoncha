@@ -1,28 +1,22 @@
 # app/services/log_service.py
-from typing import List, Optional
 from datetime import datetime, timedelta
+from typing import List, Optional
 
-from sqlalchemy import select, func
-from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import HTTPException, status
+from sqlalchemy import func, select
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.user import UserType, User
-from app.models.device import (
-    Log,
-    UserDevice,
-    Device,
-    Action,
-    UserApp,
-)
-from app.models.user import App as AppModel
 from app.enums.enums import ActionDegrees
+from app.models.device import Action, Device, Log, UserApp, UserDevice
+from app.models.user import App as AppModel
+from app.models.user import User, UserType
 from app.schemas.logs import (
-    LogCreate,
-    LogDetail,
-    DeviceInfo,
-    AppInfo,
     ActionInfo,
     ActionResponse,
+    AppInfo,
+    DeviceInfo,
+    LogCreate,
+    LogDetail,
     LogSummaryResponse,
     TopApp,
 )

@@ -1,5 +1,7 @@
 from typing import Optional
-from pydantic import BaseModel, validator
+
+from pydantic import validator
+
 from app.enums.enums import GeneralType, Priorities
 from app.schemas.base import BaseSchema
 

@@ -1,6 +1,7 @@
-from typing import Optional
 from datetime import datetime
-from app.enums.enums import UserRole, Genders, Languages, Themes
+from typing import Optional
+
+from app.enums.enums import Genders, Languages, Themes, UserRole
 from app.schemas.base import BaseSchema
 
 

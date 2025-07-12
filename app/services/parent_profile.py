@@ -1,14 +1,13 @@
-from typing import List
+from fastapi import HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from fastapi import HTTPException, status
 
-from app.models.user import User, UserType, ParentInfo
+from app.models.user import ParentInfo, User, UserType
 from app.schemas.parent_profile import (
+    ChildInfo,
+    ParentChildrenResponse,
     ParentProfileResponse,
     ParentProfileUpdate,
-    ParentChildrenResponse,
-    ChildInfo,
 )
 
 

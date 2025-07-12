@@ -1,13 +1,12 @@
-from sqlalchemy import select
-from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import HTTPException, status
+from sqlalchemy import and_, select
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.user import User
-from app.core.security import verify_password, create_access_token
+from app.core.security import create_access_token, verify_password
 from app.enums.enums import UserRole
-from app.schemas.auth import (PhoneNumberCheckResponse,
-                             LoginRequest, LoginResponse)
-from sqlalchemy import select, and_
+from app.models.user import User
+from app.schemas.auth import PhoneNumberCheckResponse
+
 
 class AuthService:
     def __init__(self, db: AsyncSession):
@@ -19,7 +18,7 @@ class AuthService:
         stmt = select(User).where(
             and_(
                 User.phone_number == phone_number,
-                User.user_role_name == user_role.value
+                User.user_role_name == user_role.value,
             )
         )
         result = await self.db.execute(stmt)
@@ -27,11 +26,10 @@ class AuthService:
         if not user:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail="User not found. Please register."
+                detail="User not found. Please register.",
             )
         return PhoneNumberCheckResponse(
-            exists=True,
-            message="User exists. Please proceed to login."
+            exists=True, message="User exists. Please proceed to login."
         )
 
     async def authenticate_user(self, phone_number: str, password: str) -> User:
@@ -53,8 +51,8 @@ class AuthService:
         )
         return {
             "access_token": access_token,
-            "token_type":   "bearer",
-            "user_id":      user.id,
-            "user_role":    user.user_role_name,
-            "expires_at":   expires_at,
+            "token_type": "bearer",
+            "user_id": user.id,
+            "user_role": user.user_role_name,
+            "expires_at": expires_at,
         }

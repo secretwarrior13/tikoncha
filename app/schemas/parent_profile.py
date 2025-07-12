@@ -1,5 +1,5 @@
 from typing import List, Optional
-from pydantic import BaseModel, ConfigDict, validator
+
 from app.enums.enums import Genders
 from app.schemas.base import BaseSchema
 

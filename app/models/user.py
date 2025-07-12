@@ -1,37 +1,21 @@
-from sqlalchemy import (
-    Column,
-    Integer,
-    String,
-    TIMESTAMP,
-    ForeignKey,
-    Boolean,
-    Text,
-    Numeric,
-    JSON,
-    func,
-    UniqueConstraint,
-    Index,
-)
-from sqlalchemy.orm import relationship
-from sqlalchemy.dialects.postgresql import ENUM
-
-from app.models.base import SQLModel
-from app.enums.enums import (
-    Priorities,
-    Genders,
-    Shifts,
-    OsTypes,
-    AndroidUI,
-    PhoneBrands,
-    ActionDegrees,
-    Languages,
-    Themes,
-    AppType,
-    AppRequestStatuses,
-    GeneralType,
-)
 import uuid
-from sqlalchemy.dialects.postgresql import UUID
+
+from sqlalchemy import (
+    JSON,
+    TIMESTAMP,
+    Boolean,
+    Column,
+    ForeignKey,
+    Integer,
+    Numeric,
+    String,
+    func,
+)
+from sqlalchemy.dialects.postgresql import ENUM, UUID
+from sqlalchemy.orm import relationship
+
+from app.enums.enums import AppType, Genders, Priorities, Shifts
+from app.models.base import SQLModel
 
 
 class UserTask(SQLModel):
@@ -60,7 +44,6 @@ class UserTask(SQLModel):
 
 
 class UserType(SQLModel):
-
     __tablename__ = "user_types"
 
     id = Column(
@@ -107,7 +90,6 @@ class Website(SQLModel):
 
 
 class App(SQLModel):
-
     __tablename__ = "apps"
 
     id = Column(
@@ -136,7 +118,6 @@ class App(SQLModel):
 
 
 class Policy(SQLModel):
-
     __tablename__ = "policies"
 
     id = Column(
@@ -176,7 +157,6 @@ class Policy(SQLModel):
 
 
 class PolicyApp(SQLModel):
-
     __tablename__ = "policy_apps"
 
     id = Column(
@@ -202,7 +182,6 @@ class PolicyApp(SQLModel):
 
 
 class PolicyWeb(SQLModel):
-
     __tablename__ = "policy_webs"
 
     id = Column(
@@ -229,7 +208,6 @@ class PolicyWeb(SQLModel):
 
 
 class Region(SQLModel):
-
     __tablename__ = "regions"
 
     id = Column(
@@ -287,7 +265,6 @@ class City(SQLModel):
 
 
 class District(SQLModel):
-
     __tablename__ = "districts"
 
     id = Column(
@@ -374,7 +351,6 @@ class School(SQLModel):
 
 
 class User(SQLModel):
-
     __tablename__ = "users"
 
     id = Column(
@@ -462,7 +438,6 @@ class User(SQLModel):
 
 
 class StudentInfo(SQLModel):
-
     __tablename__ = "student_infos"
 
     id = Column(
@@ -527,7 +502,6 @@ class StudentInfo(SQLModel):
 
 
 class ParentInfo(SQLModel):
-
     __tablename__ = "parent_infos"
 
     id = Column(

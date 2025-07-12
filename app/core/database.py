@@ -1,4 +1,5 @@
 from typing import AsyncIterator
+
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -22,6 +23,7 @@ AsyncSessionFactory = sessionmaker(
     autoflush=False,
 )
 
+
 # Dependency: yields a fully async DB session with commit/rollback
 async def get_db() -> AsyncIterator[AsyncSession]:
     async with AsyncSessionFactory() as session:
@@ -32,6 +34,7 @@ async def get_db() -> AsyncIterator[AsyncSession]:
             await session.rollback()
             raise
 
+
 # Optional aliases
 get_async_session = get_db
-get_async_db= get_db
+get_async_db = get_db

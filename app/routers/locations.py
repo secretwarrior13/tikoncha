@@ -1,27 +1,24 @@
 # app/routers/location.py
 
-from typing import List, Dict, Any, Optional
+from typing import Any, Dict, List, Optional
+
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_async_session
 from app.core.security import get_current_user
 from app.models.user import User
-from app.schemas.locations import (
-    RegionResponse,
-    CityResponse,
-    DistrictResponse,
-)
+from app.schemas.locations import CityResponse, DistrictResponse, RegionResponse
 from app.services.locations import (
-    get_regions,
-    get_region_detail,
-    get_cities,
-    get_districts,
-    create_region,
     create_city,
     create_district,
-    search_locations,
+    create_region,
+    get_cities,
+    get_districts,
     get_location_statistics,
+    get_region_detail,
+    get_regions,
+    search_locations,
 )
 
 router = APIRouter(prefix="/locations", tags=["Locations"])

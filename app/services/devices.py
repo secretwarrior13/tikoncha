@@ -1,15 +1,16 @@
 from typing import List
+
+from fastapi import HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from fastapi import HTTPException, status
 
-from app.models.device import Device, OS, UserDevice, Setup
+from app.models.device import OS, Device, Setup, UserDevice
 from app.models.user import User
 from app.schemas.devices import (
-    UserDeviceResponse,
+    DeviceCreate,
     OSResponse,
     RegisterDeviceResponse,
-    DeviceCreate,
+    UserDeviceResponse,
 )
 
 

@@ -1,40 +1,38 @@
 from datetime import timedelta
-from typing import Dict
 
+from fastapi import HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
-from fastapi import HTTPException, status
 
-from app.core.security import hash_password, create_access_token, config
-from app.models.user import User, StudentInfo, ParentInfo
+from app.core.security import config, create_access_token, hash_password
 from app.models.preferences import UserPreference
+from app.models.user import ParentInfo, StudentInfo, User
 from app.schemas.register import (
-    UserCreate,
-    UserRegisterResponse,
-    StudentInfoCreate,
-    ParentInfoCreate,
-    UserPreferenceCreate,
     IDResponse,
+    ParentInfoCreate,
+    StudentInfoCreate,
+    UserCreate,
+    UserPreferenceCreate,
+    UserRegisterResponse,
 )
+
 
 async def register_user(db: AsyncSession, data: UserCreate) -> UserRegisterResponse:
     stmt = select(User).where(
-        User.phone_number   == data.phone_number,
-        User.user_role_name == data.role.name
+        User.phone_number == data.phone_number, User.user_role_name == data.role.name
     )
     existing = (await db.execute(stmt)).scalars().first()
     if existing:
         raise HTTPException(
-            status.HTTP_400_BAD_REQUEST,
-            "Phone already registered for this role"
+            status.HTTP_400_BAD_REQUEST, "Phone already registered for this role"
         )
 
     new_user = User(
-        phone_number   = data.phone_number,
-        username       = data.username,
-        user_role_name = data.role.value,
-        password_hash  = hash_password(data.password),
+        phone_number=data.phone_number,
+        username=data.username,
+        user_role_name=data.role.value,
+        password_hash=hash_password(data.password),
     )
     db.add(new_user)
     try:
@@ -43,17 +41,16 @@ async def register_user(db: AsyncSession, data: UserCreate) -> UserRegisterRespo
     except IntegrityError as e:
         await db.rollback()
         raise HTTPException(
-            status.HTTP_400_BAD_REQUEST,
-            f"Registration failed: {e.orig}"
+            status.HTTP_400_BAD_REQUEST, f"Registration failed: {e.orig}"
         )
 
     access_token = ""
-    expires_at   = 0
+    expires_at = 0
     try:
         token_data = {
-            "sub":   str(new_user.id),
+            "sub": str(new_user.id),
             "phone": new_user.phone_number,
-            "role":  new_user.user_role_name,
+            "role": new_user.user_role_name,
         }
         expires = timedelta(minutes=config.ACCESS_TOKEN_EXPIRE_MINUTES)
         access_token, expires_at = create_access_token(
@@ -63,11 +60,11 @@ async def register_user(db: AsyncSession, data: UserCreate) -> UserRegisterRespo
         print("⚠️ Token generation failed:", e)
 
     return UserRegisterResponse(
-        message      = "User registered successfully",
-        user_id      = new_user.id,
-        access_token = access_token,
-        token_type   = "bearer" if access_token else "",
-        expires_at   = expires_at,
+        message="User registered successfully",
+        user_id=new_user.id,
+        access_token=access_token,
+        token_type="bearer" if access_token else "",
+        expires_at=expires_at,
     )
 
 

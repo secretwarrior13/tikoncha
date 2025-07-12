@@ -1,17 +1,12 @@
 # app/api/endpoints/apps/service.py
-from typing import List, Dict, Any, Optional
+from typing import Any, Dict, List, Optional
+
 from sqlalchemy.orm import Session
 
-from app.models.user import App
-from app.models.device import UserApp
+from app.enums.enums import AppRequestStatuses, AppType, GeneralType, Priorities
 from app.models.app_request import AppRequest
-from app.models.user import User
-from app.enums.enums import (
-    GeneralType,
-    AppType,
-    Priorities,
-    AppRequestStatuses,
-)
+from app.models.device import UserApp
+from app.models.user import App, User
 
 
 class AppService:

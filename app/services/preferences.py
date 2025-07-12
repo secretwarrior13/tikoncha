@@ -1,13 +1,17 @@
 # app/services/preferences.py
-from sqlalchemy.ext.asyncio import AsyncSession
+from typing import Dict
+
 from fastapi import HTTPException, status
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from app.models.preferences import UserPreference
 from app.models.user import User
 from app.schemas.preferences import (
+    Languages,
+    Themes,
     UserPreferencesResponse,
     UserPreferencesUpdate,
 )
-from typing import Dict
 
 
 async def get_user_preferences(db: AsyncSession, user: User) -> UserPreferencesResponse:

@@ -1,14 +1,14 @@
-from sqlalchemy import Column, Integer, String, TIMESTAMP, ForeignKey, Boolean, func
-from sqlalchemy.orm import relationship
-from sqlalchemy.dialects.postgresql import ENUM
-from app.enums.enums import OsTypes, AndroidUI, PhoneBrands, ActionDegrees
-from app.models.base import SQLModel
 import uuid
-from sqlalchemy.dialects.postgresql import UUID
+
+from sqlalchemy import TIMESTAMP, Boolean, Column, ForeignKey, Integer, String, func
+from sqlalchemy.dialects.postgresql import ENUM, UUID
+from sqlalchemy.orm import relationship
+
+from app.enums.enums import ActionDegrees, AndroidUI, OsTypes, PhoneBrands
+from app.models.base import SQLModel
 
 
 class OS(SQLModel):
-
     __tablename__ = "operating_systems"
     id = Column(
         UUID(as_uuid=True),
@@ -36,7 +36,6 @@ class OS(SQLModel):
 
 
 class Device(SQLModel):
-
     __tablename__ = "devices"
 
     id = Column(
@@ -109,7 +108,6 @@ class UserDevice(SQLModel):
 
 
 class Action(SQLModel):
-
     __tablename__ = "actions"
 
     id = Column(
@@ -131,7 +129,6 @@ class Action(SQLModel):
 
 
 class Log(SQLModel):
-
     __tablename__ = "logs"
 
     id = Column(
@@ -178,7 +175,6 @@ class Log(SQLModel):
 
 
 class Setup(SQLModel):
-
     __tablename__ = "setups"
 
     id = Column(
@@ -220,7 +216,6 @@ class Setup(SQLModel):
 
 
 class UserApp(SQLModel):
-
     __tablename__ = "user_apps"
 
     id = Column(

@@ -1,6 +1,6 @@
 # app/schemas/preferences.py
-from typing import Optional, Dict
-from pydantic import BaseModel, ConfigDict
+from typing import Optional
+
 from app.enums.enums import Languages, Themes
 from app.schemas.base import BaseSchema
 
@@ -15,8 +15,6 @@ class UserPreferencesBase(BaseSchema):
 
 class UserPreferencesUpdate(UserPreferencesBase):
     """Payload for PUT /preferences"""
-
-    pass
 
 
 class UserPreferencesResponse(UserPreferencesBase):

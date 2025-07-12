@@ -3,26 +3,28 @@ from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_async_session
-from app.services.register import (
-    register_user,
-    create_student_info,
-    create_parent_info,
-    create_user_preferences,
-)
 from app.schemas.register import (
-    UserCreate,
-    UserRegisterResponse,
-    StudentInfoCreate,
-    ParentInfoCreate,
-    UserPreferenceCreate,
     IDResponse,
+    ParentInfoCreate,
+    StudentInfoCreate,
+    UserCreate,
+    UserPreferenceCreate,
+    UserRegisterResponse,
+)
+from app.services.register import (
+    create_parent_info,
+    create_student_info,
+    create_user_preferences,
+    register_user,
 )
 
 router = APIRouter(prefix="/register", tags=["Register"])
 
 
 @router.post(
-    "/create_user", response_model=UserRegisterResponse, status_code=status.HTTP_201_CREATED
+    "/create_user",
+    response_model=UserRegisterResponse,
+    status_code=status.HTTP_201_CREATED,
 )
 async def register_new_user(
     payload: UserCreate,

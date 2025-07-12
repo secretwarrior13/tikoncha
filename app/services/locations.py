@@ -1,15 +1,11 @@
-from typing import List, Dict, Any, Optional
-from sqlalchemy import select, func
-from sqlalchemy.ext.asyncio import AsyncSession
-from fastapi import HTTPException, status
+from typing import Any, Dict, List, Optional
 
-from app.models.user import User
-from app.models.user import Region, City, District
-from app.schemas.locations import (
-    RegionResponse,
-    CityResponse,
-    DistrictResponse,
-)
+from fastapi import HTTPException, status
+from sqlalchemy import func, select
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.models.user import City, District, Region, User
+from app.schemas.locations import CityResponse, DistrictResponse, RegionResponse
 
 
 async def get_regions(db: AsyncSession, current_user: User) -> List[Region]:
