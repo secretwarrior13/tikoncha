@@ -1,0 +1,14 @@
+fastapi>=0.68.0
+uvicorn>=0.15.0
+sqlalchemy>=1.4.0
+psycopg2-binary>=2.9.3
+passlib>=1.7.4
+python-jose>=3.3.0
+PyJWT>=2.3.0
+python-dotenv>=1.0.0
+pydantic[email]>=2.0.0
+python-multipart>=0.0.5
+asyncpg
+loguru
+alembic
+pre-commit

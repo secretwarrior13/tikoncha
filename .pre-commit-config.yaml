@@ -1,0 +1,20 @@
+# .pre-commit-config.yaml
+repos:
+  - repo: https://github.com/PyCQA/autoflake
+    rev: v1.5.2
+    hooks:
+      - id: autoflake
+        args: [--remove-all-unused-imports, --remove-unused-variables, --in-place]
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.x
+    hooks:
+      - id: isort
+  - repo: https://github.com/psf/black
+    rev: stable
+    hooks:
+      - id: black
+  - repo: https://github.com/astral-sh/ruff
+    rev: v0.0.139
+    hooks:
+      - id: ruff
+        args: [--fix]
