@@ -1,35 +1,83 @@
-# .pre-commit-config.yaml
-default_stages: [manual]
-
 repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: fix-byte-order-marker
+      - id: mixed-line-ending
+      - id: check-merge-conflict
+      - id: check-added-large-files
+
+  - repo: local
+    hooks:
+      - id: commented-code-check
+        name: Check for commented code labels
+        entry: python check_commented_code.py
+        language: python
+        stages: [pre-commit]
+        files: ^app/.*\.py$
+
   - repo: https://github.com/PyCQA/autoflake
     rev: v2.3.1
     hooks:
       - id: autoflake
-        stages: [manual]
         args:
           - --remove-all-unused-imports
           - --remove-unused-variables
           - --in-place
 
-  - repo: https://github.com/PyCQA/isort
-    rev: 6.0.1
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
     hooks:
       - id: isort
-        stages: [manual]
 
   - repo: https://github.com/psf/black
-    rev: 25.1.0
+    rev: 24.10.0
     hooks:
       - id: black
-        stages: [manual]
+
+  - repo: https://github.com/pycqa/flake8
+    rev: 6.1.0
+    hooks:
+      - id: flake8
+        args:
+          - --max-line-length
+          - "150"
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.12.2
     hooks:
       - id: ruff
-        stages: [manual]
         args:
           - --fix
       - id: ruff-format
-        stages: [manual]
+
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.4
+    hooks:
+      - id: bandit
+        args:
+          - -r
+          - app
+
+  - repo: https://github.com/Lucas-C/pre-commit-hooks-safety
+    rev: v1.4.2
+    hooks:
+      - id: python-safety-dependencies-check
+
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.4.0
+    hooks:
+      - id: detect-secrets
+        args:
+          - --baseline
+          - .secrets.baseline
+
+  - repo: local
+    hooks:
+      - id: pip-audit
+        name: pip-audit vulnerability scan
+        entry: pip-audit
+        language: system
+        types: [python]

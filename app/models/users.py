@@ -217,13 +217,8 @@ class Region(SQLModel):
         nullable=False,
     )
     name = Column(String, unique=True)
+    coordinate = Column(String, nullable=True)
 
-    cities = relationship(
-        "City",
-        back_populates="region",
-        cascade="all, delete-orphan",
-        passive_deletes=True,
-    )
     districts = relationship(
         "District",
         back_populates="region",
@@ -233,32 +228,6 @@ class Region(SQLModel):
     schools = relationship(
         "School",
         back_populates="region_rel",
-        cascade="all, delete-orphan",
-        passive_deletes=True,
-    )
-
-
-class City(SQLModel):
-    """City model"""
-
-    __tablename__ = "cities"
-
-    id = Column(
-        UUID(as_uuid=True),
-        primary_key=True,
-        default=uuid.uuid4,
-        nullable=False,
-    )
-    name = Column(String, unique=True)
-    parent_region = Column(
-        UUID(as_uuid=True),
-        ForeignKey("regions.id", ondelete="CASCADE"),
-        nullable=False,
-    )
-    region = relationship("Region", back_populates="cities")
-    schools = relationship(
-        "School",
-        back_populates="city_rel",
         cascade="all, delete-orphan",
         passive_deletes=True,
     )
@@ -274,6 +243,8 @@ class District(SQLModel):
         nullable=False,
     )
     name = Column(String, unique=True)
+    coordinate = Column(String, nullable=True)
+
     parent_region = Column(
         UUID(as_uuid=True),
         ForeignKey("regions.id", ondelete="CASCADE"),
@@ -295,17 +266,13 @@ class School(SQLModel):
         nullable=False,
     )
     name = Column(String, nullable=False)
-    region = Column(
+    region_id = Column(
         UUID(as_uuid=True),
         ForeignKey("regions.id", ondelete="CASCADE"),
         nullable=False,
     )
-    city = Column(
-        UUID(as_uuid=True),
-        ForeignKey("cities.id", ondelete="CASCADE"),
-        nullable=False,
-    )
-    district = Column(
+
+    district_id = Column(
         UUID(as_uuid=True),
         ForeignKey("districts.id", ondelete="CASCADE"),
         nullable=False,
@@ -318,14 +285,10 @@ class School(SQLModel):
     policy_id = Column(
         UUID(as_uuid=True),
         ForeignKey("policies.id", ondelete="CASCADE"),
-        nullable=False,
+        nullable=True,
     )
     region_rel = relationship("Region", back_populates="schools")
-    city_rel = relationship(
-        "City",
-        back_populates="schools",
-        passive_deletes=True,
-    )
+
     district_rel = relationship(
         "District",
         back_populates="schools",
@@ -380,14 +343,14 @@ class User(SQLModel):
     )
     father_of = relationship(
         "StudentInfo",
-        foreign_keys="StudentInfo.father",
+        foreign_keys="StudentInfo.father_id",
         back_populates="father_rel",
         cascade="all, delete-orphan",
         passive_deletes=True,
     )
     mother_of = relationship(
         "StudentInfo",
-        foreign_keys="StudentInfo.mother",
+        foreign_keys="StudentInfo.mother_id",
         back_populates="mother_rel",
         cascade="all, delete-orphan",
         passive_deletes=True,
@@ -458,7 +421,7 @@ class StudentInfo(SQLModel):
     gender = Column(
         ENUM(Genders, name="genders"),
     )
-    school = Column(
+    school_id = Column(
         UUID(as_uuid=True),
         ForeignKey("schools.id", ondelete="CASCADE"),
         nullable=False,
@@ -466,12 +429,12 @@ class StudentInfo(SQLModel):
     shift = Column(
         ENUM(Shifts, name="shifts"),
     )
-    father = Column(
+    father_id = Column(
         UUID(as_uuid=True),
         ForeignKey("users.id", ondelete="CASCADE"),
         nullable=True,
     )
-    mother = Column(
+    mother_id = Column(
         UUID(as_uuid=True),
         ForeignKey("users.id", ondelete="CASCADE"),
         nullable=True,
@@ -489,13 +452,13 @@ class StudentInfo(SQLModel):
     )
     father_rel = relationship(
         "User",
-        foreign_keys=[father],
+        foreign_keys=[father_id],
         back_populates="father_of",
         passive_deletes=True,
     )
     mother_rel = relationship(
         "User",
-        foreign_keys=[mother],
+        foreign_keys=[mother_id],
         back_populates="mother_of",
         passive_deletes=True,
     )
