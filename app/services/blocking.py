@@ -6,8 +6,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.enums.enums import AppRequestStatuses
-from app.models.device import UserApp
-from app.models.user import App, School, StudentInfo, User, UserType
+from app.models import App, School, StudentInfo, User, UserApp, UserRole
 
 
 class BlockingServiceAsync:
@@ -15,7 +14,7 @@ class BlockingServiceAsync:
         self.db = db
 
     async def _ensure_student(self, user: User) -> StudentInfo:
-        ut = await self.db.get(UserType, user.user_type_id)
+        ut = await self.db.get(UserRole, user.user_role_id)
         if not ut or ut.name != "student":
             raise PermissionError("Only students may access blocking data")
 

@@ -1,4 +1,3 @@
-# app/services/log_service.py
 from datetime import datetime, timedelta
 from typing import List, Optional
 
@@ -7,9 +6,9 @@ from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.enums.enums import ActionDegrees
-from app.models.device import Action, Device, Log, UserApp, UserDevice
-from app.models.user import App as AppModel
-from app.models.user import User, UserType
+from app.models import Action
+from app.models import App as AppModel
+from app.models import Device, Log, User, UserApp, UserDevice, UserRole
 from app.schemas.logs import (
     ActionInfo,
     ActionResponse,
@@ -25,7 +24,6 @@ from app.schemas.logs import (
 async def create_log(
     db: AsyncSession, current_user: User, data: LogCreate
 ) -> LogDetail:
-    # verify the device belongs to the user
     ud = (
         (
             await db.execute(
@@ -41,7 +39,6 @@ async def create_log(
     if not ud:
         raise HTTPException(status.HTTP_403_FORBIDDEN, "Device does not belong to user")
 
-    # verify action exists
     action = (
         (await db.execute(select(Action).where(Action.id == data.action_id)))
         .scalars()
@@ -50,7 +47,6 @@ async def create_log(
     if not action:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Action not found")
 
-    # verify user_app if provided
     app_obj = None
     if data.user_app_id is not None:
         ua = (
@@ -118,7 +114,7 @@ async def get_logs(
     ut = (
         (
             await db.execute(
-                select(UserType).where(UserType.id == current_user.user_type_id)
+                select(UserRole).where(UserRole.id == current_user.user_type_id)
             )
         )
         .scalars()
@@ -131,10 +127,8 @@ async def get_logs(
 
     stmt = select(Log).join(UserDevice, Log.user_device_id == UserDevice.id)
 
-    # restrict to this user's devices
     stmt = stmt.where(UserDevice.user_id == current_user.id)
 
-    # date filters
     if start_date:
         try:
             sd = datetime.fromisoformat(start_date)
@@ -234,7 +228,7 @@ async def get_log_summary(
     ut = (
         (
             await db.execute(
-                select(UserType).where(UserType.id == current_user.user_type_id)
+                select(UserRole).where(UserRole.id == current_user.user_type_id)
             )
         )
         .scalars()
@@ -246,7 +240,6 @@ async def get_log_summary(
     now = datetime.now()
     start = now - timedelta(days=days)
 
-    # all logs on this user's devices
     total = await db.scalar(
         select(func.count(Log.id))
         .join(UserDevice, Log.user_device_id == UserDevice.id)

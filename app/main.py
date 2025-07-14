@@ -13,9 +13,10 @@ from app.routers import (
     devices,
     locations,
     logs,
+    operating_systems,
     parent_profile,
+    policies,
     preferences,
-    register,
     schools,
     student_profile,
     users,
@@ -24,25 +25,23 @@ from app.routers import (
 from app.version import __version__
 
 api_router = APIRouter()
-api_router.include_router(apps.router)
+# api_router.include_router(apps.router)
 api_router.include_router(auth.router)
-api_router.include_router(register.router)
 api_router.include_router(users.router)
-api_router.include_router(student_profile.router)
-api_router.include_router(parent_profile.router)
 api_router.include_router(schools.router)
-api_router.include_router(devices.router)
 api_router.include_router(locations.router)
-api_router.include_router(logs.router)
+api_router.include_router(operating_systems.router)
+api_router.include_router(devices.router)
+# api_router.include_router(logs.router)
 api_router.include_router(preferences.router)
-api_router.include_router(websites.router)
-api_router.include_router(blocking.router)
+# api_router.include_router(websites.router)
+# api_router.include_router(blocking.router)
+# api_router.include_router(policies.router)
 
 
 def create_app() -> FastAPI:
     app = FastAPI(
         title=config.PROJECT_NAME,
-        # description=config.PROJECT_DESCRIPTION,
         version=__version__,
         openapi_url="/openapi.json",
         docs_url="/docs",
@@ -65,7 +64,6 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
 
-    # 3) Global security headers
     @app.middleware("http")
     async def add_security_headers(request: Request, call_next):
         response = await call_next(request)
@@ -78,10 +76,8 @@ def create_app() -> FastAPI:
         response.headers["Permissions-Policy"] = "geolocation=(), microphone=()"
         return response
 
-    # 4) Mount versioned API
     app.include_router(api_router)
 
-    # 5) Health‐check
     @app.get("/", include_in_schema=False)
     async def health_check():
         return {

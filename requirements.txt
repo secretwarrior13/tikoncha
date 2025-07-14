@@ -12,3 +12,10 @@ asyncpg
 loguru
 alembic
 pre-commit
+pydantic_settings
+black
+argon2_cffi
+sqlmodel
+httpx
+flake8
+isort

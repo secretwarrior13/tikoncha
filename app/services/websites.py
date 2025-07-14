@@ -4,7 +4,7 @@ from fastapi import HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.user import Policy, Website
+from app.models import Policy, Website
 from app.schemas.websites import PolicyCreate, WebsiteCreate
 
 

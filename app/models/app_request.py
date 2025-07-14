@@ -1,15 +1,25 @@
 import uuid
 
-from sqlalchemy import Column, ForeignKey, Text
+from sqlalchemy import (
+    JSON,
+    TIMESTAMP,
+    Boolean,
+    Column,
+    ForeignKey,
+    Integer,
+    Numeric,
+    String,
+    Text,
+    func,
+)
 from sqlalchemy.dialects.postgresql import ENUM, UUID
 from sqlalchemy.orm import relationship
 
-from app.enums.enums import AppRequestStatuses
+from app.enums.enums import AppRequestStatuses, AppType
 from app.models.base import SQLModel
 
 
 class AppRequest(SQLModel):
-    """App Request model"""
 
     __tablename__ = "app_requests"
 
@@ -36,7 +46,6 @@ class AppRequest(SQLModel):
         default=AppRequestStatuses.PENDING.value,
         nullable=False,
     )
-    # Relationships
     app = relationship("App", back_populates="app_requests")
     from_user = relationship(
         "User",
@@ -91,3 +100,31 @@ class AppRequestLog(SQLModel):
         back_populates="app_request_logs",
         passive_deletes=True,
     )
+
+
+class App(SQLModel):
+    __tablename__ = "apps"
+
+    id = Column(
+        UUID(as_uuid=True),
+        primary_key=True,
+        default=uuid.uuid4,
+        nullable=False,
+    )
+    name = Column(String, nullable=False)
+    package = Column(String, unique=True)
+    icon = Column(String)
+    install_count = Column(Integer, default=0)
+    type = Column(
+        ENUM(AppType, name="app_type"),
+    )
+    added_at = Column(TIMESTAMP, nullable=False, server_default=func.now())
+
+    policy_apps = relationship("PolicyApp", back_populates="app")
+    app_requests = relationship(
+        "AppRequest",
+        back_populates="app",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
+    user_apps = relationship("UserApp", back_populates="app")

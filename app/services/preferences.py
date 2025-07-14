@@ -5,7 +5,7 @@ from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.preferences import UserPreference
-from app.models.user import User
+from app.models.users import User
 from app.schemas.preferences import (
     Languages,
     Themes,

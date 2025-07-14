@@ -1,3 +1,6 @@
+from typing import Optional
+from uuid import UUID
+
 from app.schemas.base import BaseSchema
 
 
@@ -5,23 +8,31 @@ class RegionBase(BaseSchema):
     name: str
 
 
-class RegionResponse(BaseSchema):
-    id: int
-
-
-class CityBase(BaseSchema):
+class RegionCreateRequest(BaseSchema):
+    coordinate: Optional[str] = None
     name: str
-    parent_region: int
 
 
-class CityResponse(BaseSchema):
-    id: int
+class RegionCreateResponse(BaseSchema):
+    id: UUID
+    name: str
+    coordinate: Optional[str] = None
+
+
+class DistrictCreateRequest(BaseSchema):
+    name: str
+    coordinate: Optional[str] = None
+    parent_region: UUID
+
+
+class DistrictCreateResponse(BaseSchema):
+    id: UUID
+    name: str
+    coordinate: Optional[str]
+    parent_region: UUID
+    parent_region_name: str
 
 
 class DistrictBase(BaseSchema):
     name: str
     parent_region: int
-
-
-class DistrictResponse(BaseSchema):
-    id: int

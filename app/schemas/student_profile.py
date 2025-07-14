@@ -3,7 +3,7 @@ from typing import Optional
 from app.schemas.base import BaseSchema
 
 
-class UserResponse(BaseSchema):
+class UserCreateResponse(BaseSchema):
     id: int
     phone_number: Optional[str]
     username: Optional[str]
@@ -26,7 +26,7 @@ class EducationResponse(BaseSchema):
 
 
 class StudentProfileResponse(BaseSchema):
-    user: UserResponse
+    user: UserCreateResponse
     student_info: StudentInfoResponse
     education: EducationResponse
 
@@ -38,7 +38,6 @@ class UpdateResponse(BaseSchema):
 
 
 class StudentInfoUpdate(BaseSchema):
-    """Allowed fields when updating a student’s info."""
 
     first_name: Optional[str]
     last_name: Optional[str]
@@ -46,4 +45,4 @@ class StudentInfoUpdate(BaseSchema):
     age: Optional[int]
     gender: Optional[str]
     shift: Optional[str]
-    school: Optional[int]  # ID of the School
+    school: Optional[int]

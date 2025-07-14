@@ -5,7 +5,6 @@ from sqlalchemy.orm import sessionmaker
 
 from app.core.config import config
 
-# Create the async engine
 async_engine = create_async_engine(
     config.database.async_dsn,
     echo=False,
@@ -15,7 +14,6 @@ async_engine = create_async_engine(
     pool_recycle=1800,
 )
 
-# Configure a session factory for AsyncSession
 AsyncSessionFactory = sessionmaker(
     bind=async_engine,
     class_=AsyncSession,
@@ -24,7 +22,6 @@ AsyncSessionFactory = sessionmaker(
 )
 
 
-# Dependency: yields a fully async DB session with commit/rollback
 async def get_db() -> AsyncIterator[AsyncSession]:
     async with AsyncSessionFactory() as session:
         try:
@@ -35,6 +32,5 @@ async def get_db() -> AsyncIterator[AsyncSession]:
             raise
 
 
-# Optional aliases
 get_async_session = get_db
 get_async_db = get_db

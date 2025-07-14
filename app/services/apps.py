@@ -1,12 +1,10 @@
-# app/api/endpoints/apps/service.py
 from typing import Any, Dict, List, Optional
 
 from sqlalchemy.orm import Session
 
 from app.enums.enums import AppRequestStatuses, AppType, GeneralType, Priorities
+from app.models import App, User, UserApp
 from app.models.app_request import AppRequest
-from app.models.device import UserApp
-from app.models.user import App, User
 
 
 class AppService:
@@ -121,7 +119,6 @@ class AppService:
                 self.session.add(app)
                 self.session.flush()
 
-            # lookup or update UserApp
             ua = (
                 self.session.query(UserApp)
                 .filter_by(user_id=current_user.id, app_id=app.id)

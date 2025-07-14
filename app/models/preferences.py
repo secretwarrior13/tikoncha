@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Column, ForeignKey
+from sqlalchemy import Boolean, Column, ForeignKey
 from sqlalchemy.dialects.postgresql import ENUM, UUID
 from sqlalchemy.orm import relationship
 
@@ -9,7 +9,6 @@ from app.models.base import SQLModel
 
 
 class UserPreference(SQLModel):
-    """User Preferences model"""
 
     __tablename__ = "user_preferences"
 
@@ -28,11 +27,15 @@ class UserPreference(SQLModel):
         ENUM(Languages, name="languages"),
         nullable=True,
     )
+    notifications_enabled = Column(
+        Boolean,
+        nullable=False,
+        server_default="true",
+    )
     theme = Column(
         ENUM(Themes, name="themes"),
         nullable=True,
     )
-    # Relationships
     user = relationship(
         "User",
         back_populates="preferences",

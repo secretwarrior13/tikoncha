@@ -2,7 +2,7 @@ from fastapi import HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.user import ParentInfo, User, UserType
+from app.models import ParentInfo, User, UserRole
 from app.schemas.parent_profile import (
     ChildInfo,
     ParentChildrenResponse,
@@ -17,7 +17,7 @@ async def get_parent_profile(
     ut = (
         (
             await db.execute(
-                select(UserType).where(UserType.id == current_user.user_type_id)
+                select(UserRole).where(UserRole.id == current_user.user_type_id)
             )
         )
         .scalars()
@@ -54,7 +54,7 @@ async def update_parent_profile(
     ut = (
         (
             await db.execute(
-                select(UserType).where(UserType.id == current_user.user_type_id)
+                select(UserRole).where(UserRole.id == current_user.user_type_id)
             )
         )
         .scalars()
@@ -101,7 +101,7 @@ async def get_parent_children(
     ut = (
         (
             await db.execute(
-                select(UserType).where(UserType.id == current_user.user_type_id)
+                select(UserRole).where(UserRole.id == current_user.user_type_id)
             )
         )
         .scalars()

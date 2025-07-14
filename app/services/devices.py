@@ -1,13 +1,16 @@
 from typing import List
+from uuid import UUID
 
 from fastapi import HTTPException, status
 from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.device import OS, Device, Setup, UserDevice
-from app.models.user import User
+from app.models import OS, Device, Setup, User, UserDevice
 from app.schemas.devices import (
-    DeviceCreate,
+    DeviceCreateRequest,
+    DeviceResponse,
+    DeviceUpdateRequest,
     OSResponse,
     RegisterDeviceResponse,
     UserDeviceResponse,
@@ -49,27 +52,22 @@ async def get_user_devices(
 
 
 async def register_device(
-    db: AsyncSession, current_user: User, data: DeviceCreate
+    db: AsyncSession, current_user: User, data: DeviceCreateRequest
 ) -> RegisterDeviceResponse:
     os_obj = await db.get(OS, data.os_id)
     if not os_obj:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "OS not found")
 
     new_dev = Device(
-        device_name=data.device_name,
         brand=data.brand,
         model=data.model,
         os_id=data.os_id,
-        android_ui=data.android_ui,
     )
     db.add(new_dev)
     await db.flush()
 
     ud = UserDevice(user_id=current_user.id, device_id=new_dev.id, is_active=True)
     db.add(ud)
-
-    setup = Setup(user_id=current_user.id, device_id=new_dev.id, is_completed=False)
-    db.add(setup)
 
     try:
         await db.commit()
@@ -93,7 +91,6 @@ async def get_os_types(db: AsyncSession) -> List[OSResponse]:
     return [
         OSResponse(
             id=o.id,
-            name=o.name,
             version=o.version,
             type=o.type.value if o.type else None,
         )
@@ -119,3 +116,136 @@ async def deactivate_device(
     ud.is_active = False
     await db.commit()
     return {"message": "Device deactivated successfully", "device_id": device_id}
+
+
+async def list_all_devices(db: AsyncSession) -> list[DeviceResponse]:
+    q = await db.execute(select(Device))
+    devs = q.scalars().all()
+
+    # bulk-load OS objects to avoid N+1 queries
+    os_map = {o.id: o async for o in db.stream(select(OS))}
+    return [
+        DeviceResponse(
+            id=d.id,
+            brand=d.brand.value if d.brand else None,
+            model=d.model,
+            ram=d.ram,
+            storage=d.storage,
+            imei=d.IMEI,
+            os=OSResponse(
+                id=os_map[d.os_id].id,
+                version=os_map[d.os_id].version,
+                type=os_map[d.os_id].type.value if os_map[d.os_id].type else None,
+            ),
+        )
+        for d in devs
+    ]
+
+
+async def retrieve_device(
+    db: AsyncSession, current_user: User, device_id: UUID
+) -> DeviceResponse:
+    ud_row = (
+        (
+            await db.execute(
+                select(UserDevice)
+                .where(UserDevice.device_id == device_id)
+                .where(UserDevice.user_id == current_user.id)
+            )
+        )
+        .scalars()
+        .first()
+    )
+
+    if not ud_row:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "Device not found")
+
+    dev = await db.get(Device, device_id)
+    os_obj = await db.get(OS, dev.os_id)
+    return DeviceResponse(
+        id=dev.id,
+        brand=dev.brand.value if dev.brand else None,
+        model=dev.model,
+        ram=dev.ram,
+        storage=dev.storage,
+        imei=dev.IMEI,
+        os=OSResponse(
+            id=os_obj.id,
+            version=os_obj.version,
+            type=os_obj.type.value if os_obj.type else None,
+        ),
+    )
+
+
+async def update_device(
+    db: AsyncSession,
+    current_user: User,
+    device_id: UUID,
+    data: DeviceUpdateRequest,
+) -> DeviceResponse:
+    # ownership check
+    owned = (
+        (
+            await db.execute(
+                select(UserDevice)
+                .where(UserDevice.user_id == current_user.id)
+                .where(UserDevice.device_id == device_id)
+            )
+        )
+        .scalars()
+        .first()
+    )
+    if not owned:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "Device not found")
+
+    dev: Device = await db.get(Device, device_id)
+
+    for field, value in data.model_dump(exclude_unset=True).items():
+        if field == "imei":
+            setattr(dev, "IMEI", value)
+        else:
+            setattr(dev, field, value)
+
+    try:
+        await db.commit()
+    except IntegrityError as ie:
+        await db.rollback()
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, str(ie)) from ie
+
+    await db.refresh(dev)
+    os_obj = await db.get(OS, dev.os_id)
+
+    return DeviceResponse(
+        id=dev.id,
+        brand=dev.brand.value if dev.brand else None,
+        model=dev.model,
+        ram=dev.ram,
+        storage=dev.storage,
+        imei=dev.IMEI,
+        os=OSResponse(
+            id=os_obj.id,
+            version=os_obj.version,
+            type=os_obj.type.value if os_obj.type else None,
+        ),
+    )
+
+
+async def delete_device(db: AsyncSession, current_user: User, device_id: UUID) -> dict:
+    ud_row = (
+        (
+            await db.execute(
+                select(UserDevice)
+                .where(UserDevice.user_id == current_user.id)
+                .where(UserDevice.device_id == device_id)
+            )
+        )
+        .scalars()
+        .first()
+    )
+    if not ud_row:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "Device not found")
+
+    dev = await db.get(Device, device_id)
+    await db.delete(dev)
+    await db.commit()
+    return {"message": "Device deleted", "device_id": str(device_id)}

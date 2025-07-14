@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db
 from app.core.security import get_current_user
-from app.models.user import User
+from app.models.users import User
 from app.schemas.websites import (
     PolicyCreate,
     PolicyResponse,
@@ -83,7 +83,7 @@ async def get_policy(
 
 
 @policy_router.post("/", response_model=PolicyResponse)
-async def create_policy(  # <- fixed )
+async def create_policy(
     data: PolicyCreate,
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
@@ -95,7 +95,7 @@ async def create_policy(  # <- fixed )
 
 
 @policy_router.get("/latest", response_model=PolicyResponse)
-async def get_latest_policy(  # <- fixed )
+async def get_latest_policy(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):

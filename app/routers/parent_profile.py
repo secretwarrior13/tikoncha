@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_async_session
 from app.core.security import get_current_user
-from app.models.user import User
+from app.models.users import User
 from app.schemas.parent_profile import (
     ParentChildrenResponse,
     ParentProfileResponse,
@@ -22,7 +22,7 @@ router = APIRouter(prefix="/parent", tags=["Parent"])
     "/profile",
     response_model=ParentProfileResponse,
 )
-async def read_profile(
+async def get_profile(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_async_session),
 ):
@@ -45,7 +45,7 @@ async def put_profile(
     "/children",
     response_model=ParentChildrenResponse,
 )
-async def read_children(
+async def get_children(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_async_session),
 ):

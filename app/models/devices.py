@@ -86,6 +86,7 @@ class UserDevice(SQLModel):
         ForeignKey("devices.id", ondelete="CASCADE"),
         nullable=False,
     )
+    is_active = Column(Boolean, default=True)
 
     user = relationship(
         "User",

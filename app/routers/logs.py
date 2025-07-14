@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_async_session
 from app.core.security import get_current_user
-from app.models.user import User
+from app.models.users import User
 from app.schemas.logs import ActionResponse, LogCreate, LogDetail, LogSummaryResponse
 from app.services.logs import create_log, get_actions, get_log_summary, get_logs
 
