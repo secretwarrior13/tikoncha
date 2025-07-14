@@ -1,4 +1,5 @@
 from typing import List
+<<<<<<< HEAD
 from uuid import UUID
 
 from fastapi import HTTPException, status
@@ -11,6 +12,17 @@ from app.schemas.devices import (
     DeviceCreateRequest,
     DeviceResponse,
     DeviceUpdateRequest,
+=======
+
+from fastapi import HTTPException, status
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.models.device import OS, Device, Setup, UserDevice
+from app.models.user import User
+from app.schemas.devices import (
+    DeviceCreate,
+>>>>>>> 1e6f4b61bd2dc388852b3f1b09697b0a276db0c0
     OSResponse,
     RegisterDeviceResponse,
     UserDeviceResponse,

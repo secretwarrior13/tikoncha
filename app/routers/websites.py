@@ -5,7 +5,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db
 from app.core.security import get_current_user
+<<<<<<< HEAD
 from app.models.users import User
+=======
+from app.models.user import User
+>>>>>>> 1e6f4b61bd2dc388852b3f1b09697b0a276db0c0
 from app.schemas.websites import (
     PolicyCreate,
     PolicyResponse,

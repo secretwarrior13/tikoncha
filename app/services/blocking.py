@@ -6,7 +6,12 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.enums.enums import AppRequestStatuses
+<<<<<<< HEAD
 from app.models import App, School, StudentInfo, User, UserApp, UserRole
+=======
+from app.models.device import UserApp
+from app.models.user import App, School, StudentInfo, User, UserType
+>>>>>>> 1e6f4b61bd2dc388852b3f1b09697b0a276db0c0
 
 
 class BlockingServiceAsync:

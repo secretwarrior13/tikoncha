@@ -1,10 +1,16 @@
 from datetime import datetime
 from typing import Optional
+<<<<<<< HEAD
 from uuid import UUID
 
 from pydantic import BaseModel, field_validator
 
 from app.enums.enums import Genders, Shifts, UserRole
+=======
+
+from pydantic import BaseModel
+
+>>>>>>> 1e6f4b61bd2dc388852b3f1b09697b0a276db0c0
 from app.schemas.base import BaseSchema
 
 

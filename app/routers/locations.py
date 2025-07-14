@@ -3,11 +3,18 @@ import traceback
 from typing import Any, Dict, List, Optional
 from uuid import UUID
 
+<<<<<<< HEAD
 from fastapi import APIRouter, Depends, Query, Response, status
+=======
+from typing import Any, Dict, List, Optional
+
+from fastapi import APIRouter, Depends, status
+>>>>>>> 1e6f4b61bd2dc388852b3f1b09697b0a276db0c0
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_async_session
 from app.core.security import get_current_user
+<<<<<<< HEAD
 from app.exc import LoggedHTTPException, raise_with_log
 from app.models.users import User
 from app.schemas.locations import (
@@ -26,6 +33,20 @@ router = APIRouter(prefix="/locations")
 
 @router.get(
     "/regions", response_model=List[RegionCreateResponse], tags=["Locations - Regions"]
+=======
+from app.models.user import User
+from app.schemas.locations import CityResponse, DistrictResponse, RegionResponse
+from app.services.locations import (
+    create_city,
+    create_district,
+    create_region,
+    get_cities,
+    get_districts,
+    get_location_statistics,
+    get_region_detail,
+    get_regions,
+    search_locations,
+>>>>>>> 1e6f4b61bd2dc388852b3f1b09697b0a276db0c0
 )
 async def get_regions(
     db: AsyncSession = Depends(get_async_session),

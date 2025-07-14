@@ -1,6 +1,9 @@
 # app/routers/device.py
 from typing import List
+<<<<<<< HEAD
 from uuid import UUID
+=======
+>>>>>>> 1e6f4b61bd2dc388852b3f1b09697b0a276db0c0
 
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -9,14 +12,19 @@ from app.core.database import get_async_db
 from app.core.security import get_current_user
 from app.models.users import User
 from app.schemas.devices import (
+<<<<<<< HEAD
     DeviceCreateRequest,
     DeviceResponse,
     DeviceUpdateRequest,
+=======
+    DeviceCreate,
+>>>>>>> 1e6f4b61bd2dc388852b3f1b09697b0a276db0c0
     OSResponse,
     RegisterDeviceResponse,
     UserDeviceResponse,
 )
 from app.services.devices import (
+<<<<<<< HEAD
     DeviceResponse,
     deactivate_device,
     delete_device,
@@ -24,6 +32,12 @@ from app.services.devices import (
     register_device,
     retrieve_device,
     update_device,
+=======
+    deactivate_device,
+    get_os_types,
+    get_user_devices,
+    register_device,
+>>>>>>> 1e6f4b61bd2dc388852b3f1b09697b0a276db0c0
 )
 
 router = APIRouter(prefix="/devices", tags=["Devices"])

@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+# app/services/log_service.py
+>>>>>>> 1e6f4b61bd2dc388852b3f1b09697b0a276db0c0
 from datetime import datetime, timedelta
 from typing import List, Optional
 
@@ -6,9 +10,15 @@ from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.enums.enums import ActionDegrees
+<<<<<<< HEAD
 from app.models import Action
 from app.models import App as AppModel
 from app.models import Device, Log, User, UserApp, UserDevice, UserRole
+=======
+from app.models.device import Action, Device, Log, UserApp, UserDevice
+from app.models.user import App as AppModel
+from app.models.user import User, UserType
+>>>>>>> 1e6f4b61bd2dc388852b3f1b09697b0a276db0c0
 from app.schemas.logs import (
     ActionInfo,
     ActionResponse,

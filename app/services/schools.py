@@ -1,12 +1,19 @@
 # app/schools/service.py
 from typing import Any, Dict, List, Optional
+<<<<<<< HEAD
 from uuid import UUID
+=======
+>>>>>>> 1e6f4b61bd2dc388852b3f1b09697b0a276db0c0
 
 from fastapi import HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+<<<<<<< HEAD
 from app.models import District, Region, School, UserRole
+=======
+from app.models.user import City, District, Region, School, UserType
+>>>>>>> 1e6f4b61bd2dc388852b3f1b09697b0a276db0c0
 from app.schemas.schools import SchoolCreate
 
 

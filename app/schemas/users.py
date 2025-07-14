@@ -1,9 +1,16 @@
+<<<<<<< HEAD
 from typing import Optional
 from uuid import UUID
 
 from pydantic import field_validator
 
 from app.enums.enums import Genders, Languages, Shifts, Themes, UserRole
+=======
+from datetime import datetime
+from typing import Optional
+
+from app.enums.enums import Genders, Languages, Themes, UserRole
+>>>>>>> 1e6f4b61bd2dc388852b3f1b09697b0a276db0c0
 from app.schemas.base import BaseSchema
 
 

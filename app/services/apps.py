@@ -1,10 +1,20 @@
+<<<<<<< HEAD
+=======
+# app/api/endpoints/apps/service.py
+>>>>>>> 1e6f4b61bd2dc388852b3f1b09697b0a276db0c0
 from typing import Any, Dict, List, Optional
 
 from sqlalchemy.orm import Session
 
 from app.enums.enums import AppRequestStatuses, AppType, GeneralType, Priorities
+<<<<<<< HEAD
 from app.models import App, User, UserApp
 from app.models.app_request import AppRequest
+=======
+from app.models.app_request import AppRequest
+from app.models.device import UserApp
+from app.models.user import App, User
+>>>>>>> 1e6f4b61bd2dc388852b3f1b09697b0a276db0c0
 
 
 class AppService:
