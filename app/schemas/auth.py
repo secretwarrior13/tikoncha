@@ -1,9 +1,10 @@
-from datetime import datetime
-from pydantic import BaseModel, Field, field_validator, ConfigDict
-from typing import Optional
-from app.schemas.base import BaseSchema
-from app.enums.enums import Languages, Themes, UserRole
 from uuid import UUID
+
+from pydantic import field_validator
+
+from app.enums.enums import UserRole
+from app.schemas.base import BaseSchema
+
 
 class PhoneNumberCheck(BaseSchema):
     phone_number: str
@@ -15,6 +16,7 @@ class PhoneNumberCheck(BaseSchema):
         if not v.startswith("+998") or len(v) != 13 or not v[4:].isdigit():
             raise ValueError("Phone number must be in format +998XXXXXXXXX")
         return v
+
 
 class PhoneNumberCheckResponse(BaseSchema):
     exists: bool
@@ -32,10 +34,11 @@ class LoginRequest(BaseSchema):
             raise ValueError("Phone number must be in format +998XXXXXXXXX")
         return v
 
+
 class LoginResponse(BaseSchema):
     access_token: str
     token_type: str
     user_id: int
     expires_at: int
-    user_id:      UUID
-    user_role:    UserRole
+    user_id: UUID
+    user_role: UserRole

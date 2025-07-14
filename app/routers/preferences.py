@@ -5,15 +5,12 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.database import get_async_session
 from app.core.security import get_current_user
 from app.models.user import User
-from app.schemas.preferences import (
-    UserPreferencesResponse,
-    UserPreferencesUpdate,
-)
+from app.schemas.preferences import UserPreferencesResponse, UserPreferencesUpdate
 from app.services.preferences import (
-    get_user_preferences,
-    update_user_preferences,
     get_available_languages,
     get_available_themes,
+    get_user_preferences,
+    update_user_preferences,
 )
 
 router = APIRouter(prefix="/preferences", tags=["Preferences"])

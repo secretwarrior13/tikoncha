@@ -1,12 +1,11 @@
 import uvicorn
-from fastapi import FastAPI, Request, APIRouter
+from fastapi import APIRouter, FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.gzip import GZipMiddleware
 from starlette.middleware.httpsredirect import HTTPSRedirectMiddleware
 from starlette.middleware.trustedhost import TrustedHostMiddleware
-from starlette.middleware.gzip import GZipMiddleware
 
 from app.core.config import config
-from app.version import __version__
 from app.routers import (
     apps,
     auth,
@@ -22,6 +21,7 @@ from app.routers import (
     users,
     websites,
 )
+from app.version import __version__
 
 api_router = APIRouter()
 api_router.include_router(apps.router)

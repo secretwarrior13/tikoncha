@@ -1,5 +1,6 @@
 from typing import Optional
-from app.enums.enums import PhoneBrands, AndroidUI
+
+from app.enums.enums import AndroidUI, PhoneBrands
 from app.schemas.base import BaseSchema
 
 
@@ -16,8 +17,6 @@ class DeviceBase(BaseSchema):
 
 class DeviceCreate(DeviceBase):
     """Same as DeviceBase – kept separate for clarity."""
-
-    pass
 
 
 class OSResponse(BaseSchema):

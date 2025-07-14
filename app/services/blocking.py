@@ -1,13 +1,13 @@
 # app/api/endpoints/blocking/service.py
-from typing import List, Dict, Any, Optional
 from datetime import datetime
+from typing import Any, Dict, List, Optional
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.user import User, UserType, StudentInfo, School, App
-from app.models.device import UserApp
 from app.enums.enums import AppRequestStatuses
+from app.models.device import UserApp
+from app.models.user import App, School, StudentInfo, User, UserType
 
 
 class BlockingServiceAsync:

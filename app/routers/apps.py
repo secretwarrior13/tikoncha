@@ -3,24 +3,23 @@ import traceback
 from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException, status
-
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
 from app.core.security import get_current_user
+from app.exc import LoggedHTTPException, raise_with_log  # your custom exceptions
+from app.models.user import User
 from app.schemas.apps import (
-    AppResponse,
-    InstalledAppResponse,
-    AppRequestResponse,
-    AppRequestListItem,
-    TypesResponse,
-    UninstallResponse,
     AppBase,
     AppRequestCreate,
+    AppRequestListItem,
+    AppRequestResponse,
+    AppResponse,
+    InstalledAppResponse,
+    TypesResponse,
+    UninstallResponse,
 )
 from app.services.apps import AppService
-from app.models.user import User
-from app.exc import LoggedHTTPException, raise_with_log  # your custom exceptions
 
 router = APIRouter(
     prefix="/apps",

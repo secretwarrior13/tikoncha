@@ -1,6 +1,8 @@
-from typing import Optional
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, validator
+from typing import Optional
+
+from pydantic import BaseModel
+
 from app.schemas.base import BaseSchema
 
 

@@ -1,16 +1,16 @@
-from typing import List, Dict, Any, Optional
-from fastapi import APIRouter, Depends
+from typing import Any, Dict, List, Optional
 
+from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_async_db
 from app.core.security import get_current_user
 from app.schemas.schools import (
-    SchoolResponse,
-    RegionResponse,
     CityResponse,
     DistrictResponse,
+    RegionResponse,
     SchoolCreate,
+    SchoolResponse,
 )
 from app.services.schools import SchoolService as svc_cls
 

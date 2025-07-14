@@ -1,11 +1,11 @@
-from sqlalchemy import Column, Integer, ForeignKey
-from sqlalchemy.orm import relationship
-from sqlalchemy.dialects.postgresql import ENUM
-
-from app.models.base import SQLModel
-from app.enums.enums import Languages, Themes
 import uuid
-from sqlalchemy.dialects.postgresql import UUID
+
+from sqlalchemy import Column, ForeignKey
+from sqlalchemy.dialects.postgresql import ENUM, UUID
+from sqlalchemy.orm import relationship
+
+from app.enums.enums import Languages, Themes
+from app.models.base import SQLModel
 
 
 class UserPreference(SQLModel):

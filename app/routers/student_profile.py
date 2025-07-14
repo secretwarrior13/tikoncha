@@ -1,14 +1,14 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.security import get_current_user
 from app.core.database import get_async_db
-from app.services.student_profile import StudentService
+from app.core.security import get_current_user
 from app.schemas.student_profile import (
+    StudentInfoUpdate,
     StudentProfileResponse,
     UpdateResponse,
-    StudentInfoUpdate,
 )
+from app.services.student_profile import StudentService
 
 router = APIRouter(prefix="/students", tags=["Students"])
 

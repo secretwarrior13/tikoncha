@@ -1,8 +1,8 @@
-from typing import Dict, List, Optional
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, validator
+from typing import Dict, Optional
+
+from app.enums.enums import AppType, GeneralType, Priorities
 from app.schemas.base import BaseSchema
-from app.enums.enums import GeneralType, AppType, Priorities
 
 
 class AppBase(BaseSchema):

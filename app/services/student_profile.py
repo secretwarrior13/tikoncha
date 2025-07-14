@@ -1,17 +1,16 @@
 # app/students/service.py
-from typing import Dict, Any
+from fastapi import HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from fastapi import HTTPException, status
 
-from app.models.user import UserType, StudentInfo, School
+from app.models.user import School, StudentInfo, UserType
 from app.schemas.student_profile import (
+    EducationResponse,
+    StudentInfoResponse,
+    StudentInfoUpdate,
     StudentProfileResponse,
     UpdateResponse,
     UserResponse,
-    StudentInfoResponse,
-    EducationResponse,
-    StudentInfoUpdate,
 )
 
 

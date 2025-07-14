@@ -11,10 +11,7 @@ from app.core.config import config
 from app.core.database import get_db
 from app.models.user import User
 
-pwd_context = CryptContext(
-    schemes=["argon2"],
-    deprecated="auto"
-)
+pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f"{config.API_V1_STR}/auth/login")
 
 
@@ -79,7 +76,7 @@ async def get_current_user(
                 user_id = int(user_id_str)
                 user_type_id = int(user_type_id)
             except (ValueError, TypeError):
-                print(f"Invalid user_id or user_type_id format")
+                print("Invalid user_id or user_type_id format")
                 raise credentials_exception
 
         except jwt.PyJWTError as e:

@@ -1,7 +1,8 @@
 import uuid
-from sqlalchemy import Column, Text, ForeignKey
+
+from sqlalchemy import Column, ForeignKey, Text
+from sqlalchemy.dialects.postgresql import ENUM, UUID
 from sqlalchemy.orm import relationship
-from sqlalchemy.dialects.postgresql import UUID, ENUM
 
 from app.enums.enums import AppRequestStatuses
 from app.models.base import SQLModel
@@ -52,7 +53,6 @@ class AppRequest(SQLModel):
 
 
 class AppRequestLog(SQLModel):
-
     __tablename__ = "app_requests_logs"
 
     id = Column(

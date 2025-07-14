@@ -1,10 +1,11 @@
 # app/schools/service.py
-from typing import List, Optional, Dict, Any
+from typing import Any, Dict, List, Optional
+
+from fastapi import HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from fastapi import HTTPException, status
 
-from app.models.user import UserType, School, Region, City, District
+from app.models.user import City, District, Region, School, UserType
 from app.schemas.schools import SchoolCreate
 
 

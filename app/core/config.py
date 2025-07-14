@@ -1,11 +1,9 @@
+import os
+from typing import List
+
 from dotenv import load_dotenv
 from pydantic import BaseModel
-from pydantic_settings import (
-    BaseSettings,
-    SettingsConfigDict,
-)
-from typing import List
-import os
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 load_dotenv(override=True)
 
@@ -16,7 +14,6 @@ class DatabaseConfig(BaseModel):
 
 
 class Config(BaseSettings):
-
     API_V1_STR: str = "/v1"
     PROJECT_NAME: str = "Tikoncha Executive Shield API"
     ENVIRONMENT: str = "development"
