@@ -1,4 +1,3 @@
-# app/routers/logs.py
 from typing import List, Optional
 
 from fastapi import APIRouter, Depends, status
@@ -6,11 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_async_session
 from app.core.security import get_current_user
-<<<<<<< HEAD
 from app.models.users import User
-=======
-from app.models.user import User
->>>>>>> 1e6f4b61bd2dc388852b3f1b09697b0a276db0c0
 from app.schemas.logs import ActionResponse, LogCreate, LogDetail, LogSummaryResponse
 from app.services.logs import create_log, get_actions, get_log_summary, get_logs
 

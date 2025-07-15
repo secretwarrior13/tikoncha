@@ -1,10 +1,7 @@
 from typing import Optional
-<<<<<<< HEAD
 from uuid import UUID
 
 from pydantic import BaseModel, Field
-=======
->>>>>>> 1e6f4b61bd2dc388852b3f1b09697b0a276db0c0
 
 from app.enums.enums import AndroidUI, PhoneBrands
 from app.schemas.base import BaseSchema
@@ -13,19 +10,7 @@ from app.schemas.base import BaseSchema
 class DeviceCreateRequest(BaseSchema):
     brand: PhoneBrands
     model: str
-<<<<<<< HEAD
     os_id: str
-=======
-    os_id: int
-    android_ui: Optional[AndroidUI] = None
-
-    class Config:
-        from_attributes = True
-
-
-class DeviceCreate(DeviceBase):
-    """Same as DeviceBase – kept separate for clarity."""
->>>>>>> 1e6f4b61bd2dc388852b3f1b09697b0a276db0c0
 
 
 class OSResponse(BaseSchema):

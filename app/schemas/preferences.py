@@ -17,6 +17,7 @@ class UserPreferencesUpdate(UserPreferencesBase):
     """Payload for PUT /preferences"""
 
 
+
 class UserPreferencesResponse(UserPreferencesBase):
     """Response for GET /preferences"""
 

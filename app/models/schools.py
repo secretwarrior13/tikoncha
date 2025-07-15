@@ -8,7 +8,6 @@ from app.models.base import SQLModel
 
 
 class School(SQLModel):
-    """School model"""
 
     __tablename__ = "schools"
 

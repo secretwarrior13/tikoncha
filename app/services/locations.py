@@ -1,5 +1,4 @@
 from typing import Any, Dict, List, Optional
-<<<<<<< HEAD
 from uuid import UUID
 
 from fastapi import HTTPException, status
@@ -15,15 +14,6 @@ from app.schemas.locations import (
     RegionCreateRequest,
     RegionCreateResponse,
 )
-=======
-
-from fastapi import HTTPException, status
-from sqlalchemy import func, select
-from sqlalchemy.ext.asyncio import AsyncSession
-
-from app.models.user import City, District, Region, User
-from app.schemas.locations import CityResponse, DistrictResponse, RegionResponse
->>>>>>> 1e6f4b61bd2dc388852b3f1b09697b0a276db0c0
 
 
 class LocationService:

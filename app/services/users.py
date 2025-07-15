@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import hashlib
 import secrets
 from datetime import datetime, timedelta
@@ -31,14 +30,6 @@ from app.schemas.users import (
     UserRegisterResponse,
     UserUpdate,
 )
-=======
-from fastapi import HTTPException, status
-from sqlalchemy import select
-from sqlalchemy.ext.asyncio import AsyncSession
-
-from app.models.preferences import UserPreference
-from app.models.user import ParentInfo, StudentInfo, UserType
->>>>>>> 1e6f4b61bd2dc388852b3f1b09697b0a276db0c0
 
 
 class UserService:

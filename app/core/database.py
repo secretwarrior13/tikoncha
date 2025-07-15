@@ -22,10 +22,6 @@ AsyncSessionFactory = sessionmaker(
 )
 
 
-<<<<<<< HEAD
-=======
-# Dependency: yields a fully async DB session with commit/rollback
->>>>>>> 1e6f4b61bd2dc388852b3f1b09697b0a276db0c0
 async def get_db() -> AsyncIterator[AsyncSession]:
     async with AsyncSessionFactory() as session:
         try:
@@ -36,9 +32,5 @@ async def get_db() -> AsyncIterator[AsyncSession]:
             raise
 
 
-<<<<<<< HEAD
-=======
-# Optional aliases
->>>>>>> 1e6f4b61bd2dc388852b3f1b09697b0a276db0c0
 get_async_session = get_db
 get_async_db = get_db

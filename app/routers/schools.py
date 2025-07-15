@@ -1,36 +1,19 @@
-<<<<<<< HEAD
 import logging
 import traceback
 from typing import Any, Dict, List, Optional
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Response, status
-=======
-from typing import Any, Dict, List, Optional
-
-from fastapi import APIRouter, Depends
->>>>>>> 1e6f4b61bd2dc388852b3f1b09697b0a276db0c0
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_async_db
 from app.core.security import get_current_user
-<<<<<<< HEAD
 from app.exc import LoggedHTTPException, raise_with_log
 from app.schemas.schools import SchoolCreate, SchoolListResponse, SchoolResponse
 from app.services.schools import SchoolService
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-=======
-from app.schemas.schools import (
-    CityResponse,
-    DistrictResponse,
-    RegionResponse,
-    SchoolCreate,
-    SchoolResponse,
-)
-from app.services.schools import SchoolService as svc_cls
->>>>>>> 1e6f4b61bd2dc388852b3f1b09697b0a276db0c0
 
 router = APIRouter(prefix="/schools", tags=["Schools"])
 

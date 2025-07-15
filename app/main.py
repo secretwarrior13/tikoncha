@@ -7,20 +7,13 @@ from starlette.middleware.trustedhost import TrustedHostMiddleware
 
 from app.core.config import config
 from app.routers import (
-    apps,
     auth,
-    blocking,
     devices,
     locations,
-    logs,
     operating_systems,
-    parent_profile,
-    policies,
     preferences,
     schools,
-    student_profile,
     users,
-    websites,
 )
 from app.version import __version__
 

@@ -1,11 +1,4 @@
 import uuid
-<<<<<<< HEAD
-=======
-
-from sqlalchemy import Column, ForeignKey, Text
-from sqlalchemy.dialects.postgresql import ENUM, UUID
-from sqlalchemy.orm import relationship
->>>>>>> 1e6f4b61bd2dc388852b3f1b09697b0a276db0c0
 
 from sqlalchemy import (
     JSON,

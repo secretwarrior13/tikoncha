@@ -6,7 +6,6 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, Response, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-<<<<<<< HEAD
 from app.core.database import get_async_session
 from app.core.security import get_current_user
 from app.exc import LoggedHTTPException, raise_with_log
@@ -27,16 +26,6 @@ from app.schemas.users import (
     UserRegisterResponse,
     UserUpdate,
     VerifyOTPRequest,
-=======
-from app.core.database import get_async_db
-from app.core.security import get_current_user
-from app.models.user import User
-from app.schemas.users import (
-    ParentInfoResponse,
-    StudentInfoResponse,
-    UserPreferenceResponse,
-    UserResponse,
->>>>>>> 1e6f4b61bd2dc388852b3f1b09697b0a276db0c0
 )
 from app.services.users import UserService
 

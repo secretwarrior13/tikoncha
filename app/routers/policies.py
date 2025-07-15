@@ -1,5 +1,3 @@
-# app/routers/policies.py
-
 from typing import List
 from uuid import UUID
 
