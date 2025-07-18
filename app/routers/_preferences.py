@@ -10,7 +10,7 @@ from app.services.preferences import (
     get_available_themes,
     get_user_preferences,
     update_user_preferences,
-    UserPreferencesUpdate
+    UserPreferencesUpdate,
 )
 
 router = APIRouter(prefix="/preferences", tags=["Preferences"])

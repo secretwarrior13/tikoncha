@@ -35,24 +35,17 @@ logging.basicConfig(level=logging.INFO)
 router = APIRouter(prefix="/users")
 
 
-@router.post("/user-exists", response_model=PhoneNumberCheckResponse, tags=["Users"])
+@router.post(
+    "/user-exists",
+    response_model=LoginResponseSchema,
+    tags=["Users"],
+)
 async def check_user_exists(
-    data: PhoneNumberCheck,
+    data: LoginRequestSchema,
     db: AsyncSession = Depends(get_async_session),
 ):
-    try:
-        svc = UserService(db)
-        return await svc.check_user_exists(data.phone_number)
-
-    except HTTPException:
-        raise
-
-    except Exception as e:
-        traceback.print_exc()
-        raise_with_log(
-            status.HTTP_500_INTERNAL_SERVER_ERROR,
-            f"Failed to check user existence: {e}." + traceback.format_exc(),
-        )
+    svc = UserService(db)
+    return await svc.check_user_exists(data.phone_number)
 
 
 @router.post(
