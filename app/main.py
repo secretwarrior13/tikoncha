@@ -11,7 +11,7 @@ from app.routers import (
     devices,
     locations,
     operating_systems,
-    preferences,
+    _preferences,
     schools,
     users,
 )
@@ -26,7 +26,7 @@ api_router.include_router(locations.router)
 api_router.include_router(operating_systems.router)
 api_router.include_router(devices.router)
 # api_router.include_router(logs.router)
-api_router.include_router(preferences.router)
+api_router.include_router(_preferences.router)
 # api_router.include_router(websites.router)
 # api_router.include_router(blocking.router)
 # api_router.include_router(policies.router)
